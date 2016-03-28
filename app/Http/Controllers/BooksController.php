@@ -10,11 +10,13 @@ class BooksController extends Controller
     //OK
     public function index()
     {
-      $pageLimit = 10;
+      if ( isset($_GET['perpage']) and (int) $_GET['perpage'] ){
+        $pageLimit = (int) $_GET['perpage'];
+      } else {
+        $pageLimit = 10;
+      }
       $Books = Book::paginate($pageLimit);
-
       return response()->json($Books);
-
     }
 
     //OK
@@ -29,10 +31,10 @@ class BooksController extends Controller
     public function createBook(Request $request)
     {
         $this->validate($request, [
-          'author'      => 'required|max:100',
-          'title'       => 'required|max:150',
-          'year'        => 'integer',
-          'description' => 'required|max:2000'
+          'author' => 'required|max:100',
+          'title' => 'required|max:150',
+          'year' => 'integer',
+          'description' => 'required|max:2000',
         ]);
         $Book = Book::create($request->all());
         //return response()->json($request->all());
