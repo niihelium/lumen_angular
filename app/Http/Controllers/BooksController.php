@@ -7,16 +7,25 @@ use Illuminate\Http\Request;
 
 class BooksController extends Controller
 {
+    public static function validateBook($req, $context)
+    {
+      $context->validate($req, [
+        'author'      => 'required|max:100',
+        'title'       => 'required|max:150',
+        'year'        => 'integer',
+        'description' => 'required|max:2000']);
+    }
     //OK
     public function index()
     {
-      if ( isset($_GET['perpage']) and (int) $_GET['perpage'] ){
-        $pageLimit = (int) $_GET['perpage'];
-      } else {
-        $pageLimit = 10;
-      }
-      $Books = Book::paginate($pageLimit);
-      return response()->json($Books);
+        if (isset($_GET['perpage']) and (int) $_GET['perpage']) {
+            $pageLimit = (int) $_GET['perpage'];
+        } else {
+            $pageLimit = 10;
+        }
+        $Books = Book::paginate($pageLimit);
+
+        return response()->json($Books);
     }
 
     //OK
@@ -30,12 +39,7 @@ class BooksController extends Controller
     //OK
     public function createBook(Request $request)
     {
-        $this->validate($request, [
-          'author' => 'required|max:100',
-          'title' => 'required|max:150',
-          'year' => 'integer',
-          'description' => 'required|max:2000',
-        ]);
+        self::validateBook($request, $this);
         $Book = Book::create($request->all());
         //return response()->json($request->all());
         return response()->json($Book);
@@ -52,6 +56,7 @@ class BooksController extends Controller
 
     public function updateBook(Request $request, $id)
     {
+        self::validateBook($request, $this);
         $Book = Book::find($id);
         $Book->title = $request->input('title');
         $Book->author = $request->input('author');
