@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Book;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,7 +13,9 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i < 5; ++$i) {
             $Book = App\Book::create([
           'title' => 'Title '.$i,
-          'author' => 'Author '.$i, ]);
+          'author' => 'Author '.$i,
+          'description' => 'Description '.$i,
+          'year' => 2015 + $i ]);
         }
     }
 }
