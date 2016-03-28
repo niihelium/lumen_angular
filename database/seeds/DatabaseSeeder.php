@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         for ($i = 0; $i < 5; ++$i) {
-            $Book = App\Book::create([
+            $Book = Book::create([
           'title' => 'Title '.$i,
           'author' => 'Author '.$i,
           'description' => 'Description '.$i,
