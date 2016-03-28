@@ -1,0 +1,24 @@
+* {
+  border-radius: 2px !important;
+}
+
+.btn-remove {
+  background-color: #EF9A9A;
+}
+
+.btn-add {
+  background-color: #64B5F6;
+}
+
+.page-controls{ 
+  text-align: center;
+  font-size: 35px;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+.table-books-container{
+  height: 510px;
+}

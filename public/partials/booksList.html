@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="jumbotron text-center">
+    <div class="table-books-container">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <td>Title</td>
+          <td>Author</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="book in main.books">
+          <td>{{ book.title }}</td>
+          <td>
+            {{ book.author }}
+            <button ng-click="delete(book._id)" type="button" class="btn btn-default btn-sm pull-right btn-remove">
+              <span class="glyphicon glyphicon-remove"></span> Remove
+            </button>
+            <button type="button" class="btn btn-default btn-sm pull-right btn-edit">
+              <span class="glyphicon glyphicon-edit"></span> Edit
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    <p class="text-center" ng-show="loading">
+      <span class="fa fa-refresh fa-spin fa-3x"></span>
+    </p>
+    <div class="page-controls">
+      <a href="#" ng-click="getPage(main.prevPage)">
+        <span class="glyphicon glyphicon-triangle-left"></span>
+      </a>
+        <span class="current-page" ngCloak>
+          {{main.currentPage}}
+        </span>
+
+      of
+        <span class="last-page" ngCloak>
+          {{main.lastPage}}
+        </span>
+      <a href="#" ng-click="getPage(main.nextPage)">
+        <span class="glyphicon glyphicon-triangle-right"></span>
+      </a>
+    </div>
+    <button type="button" class="btn btn-default btn-sm pull-right btn-add">
+      <span class="glyphicon glyphicon-plus"></span> Add
+    </button>
+  </div>
+
+</div>
