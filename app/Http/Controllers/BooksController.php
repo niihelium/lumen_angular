@@ -4,31 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use App\Utils\Utils;
 
 class BooksController extends Controller
 {
-    public static function validateBook($req, $context)
-    {
-      $context->validate($req, [
-        'author'      => 'required|max:100',
-        'title'       => 'required|max:150',
-        'year'        => 'integer',
-        'description' => 'required|max:2000']);
-    }
-    //OK
     public function index()
     {
-        if (isset($_GET['perpage']) and (int) $_GET['perpage']) {
-            $pageLimit = (int) $_GET['perpage'];
-        } else {
-            $pageLimit = 10;
-        }
-        $Books = Book::paginate($pageLimit);
+        $pageLimit = Utils::processPerPage();
+        $Books = Utils::processSort($pageLimit);
 
         return response()->json($Books);
     }
 
-    //OK
     public function getBook($id)
     {
         $Book = Book::find($id);
@@ -36,16 +23,14 @@ class BooksController extends Controller
         return response()->json($Book);
     }
 
-    //OK
     public function createBook(Request $request)
     {
-        self::validateBook($request, $this);
+        Utils::validateBook($request, $this);
         $Book = Book::create($request->all());
-        //return response()->json($request->all());
+
         return response()->json($Book);
     }
 
-    //OK
     public function deleteBook($id)
     {
         $Book = Book::find($id);
@@ -56,7 +41,7 @@ class BooksController extends Controller
 
     public function updateBook(Request $request, $id)
     {
-        self::validateBook($request, $this);
+        Utils::validateBook($request, $this);
         $Book = Book::find($id);
         $Book->title = $request->input('title');
         $Book->author = $request->input('author');
