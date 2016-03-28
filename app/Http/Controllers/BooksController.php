@@ -34,7 +34,11 @@ class BooksController extends Controller
     public function deleteBook($id)
     {
         $Book = Book::find($id);
-        $Book->delete();
+        if ($Book) {
+          $Book->delete();
+        } else {
+            return response()->json('error:Item not found');
+        }
 
         return response()->json(Book::all());
     }
